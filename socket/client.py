@@ -3,11 +3,10 @@ import threading
 
 def Send(client):
     while True:
-        str = input()
-        if str != '':
-            message = "[" + NAME + "] " + str
+        data = input("Pysql>")
+        if data != '':
             # 사용자 입력
-            client.send(bytes(message.encode()))  
+            client.send(bytes(data.encode()))  
             # Client -> Server 데이터 송신 
 
 def Recv(client):

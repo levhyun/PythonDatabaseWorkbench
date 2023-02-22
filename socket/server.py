@@ -2,25 +2,6 @@ import socket
 import threading
 from queue import Queue
 
-# def Message_set(message):
-#     start = 0
-#     stop = 0
-#     for i in range(0,len(str(message))):
-#         if message[i] == '[':
-#             start = i
-#         if message[i] == ']':
-#             stop = i+1
-#     name = message[start:stop]
-#     message = message[stop:len(str(message))]
-#     message = message + name
-#     message_length = len(str(message))
-#     space = " "
-#     final_space = ""
-#     for i in range(0,146-message_length):
-#         final_space = final_space + space   
-#     final_message = final_space + message
-#     return final_message
-
 def Send(group, send_queue):
     print('Thread Send Start')
     while True:
