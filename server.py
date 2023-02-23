@@ -1,42 +1,24 @@
 import socket
 import threading
-from queue import Queue
+import Controller
 
-def Send(group, send_queue):
-    print('Thread Send Start')
-    while True:
-        try:
-            #새롭게 추가된 클라이언트가 있을 경우 Send 쓰레드를 새롭게 만들기 위해 루프를 빠져나감
-            recv = send_queue.get()
-            if recv == 'Group Changed':
-                print('Group Changed')
-                break
-
-
-            #for 문을 돌면서 모든 클라이언트에게 동일한 메시지를 보냄
-            for conn in group:
-                message = str(recv[0])
-                if recv[1] != conn: 
-                    #client 본인이 보낸 메시지는 받을 필요가 없기 때문에 제외시킴
-                    print(message)
-                    conn.send(bytes(message.encode()))
-                else:
-                    pass
-        except:
-            pass
-
-def Recv(conn, count, send_queue):
-    print('Thread Recv(' + str(count) + ') Start\n')
+def Handle(conn, SERVER, count):
     while True:
         message = conn.recv(1024).decode()
         print(f"RECEIVE([{SERVER}:6060][Thread:{str(count)}]{message})")
-        # send_queue.put([Message_set(message), conn, count]) 
-        send_queue.put([message, conn, count]) 
+        sendData = ""
+        start = 0
+        for c in message:
+            if start == 1:
+                sendData += c
+            if c == "]":
+                start += 1
+        resultSendData = Controller.recvDataSet(sendData)
+        resultSendData = f'{resultSendData}'
+        conn.send(bytes(resultSendData.encode()))
         #각각의 클라이언트의 메시지, 소켓정보, 쓰레드 번호를 send로 보냄
 
-if __name__ == '__main__':
-    send_queue = Queue()
-
+def init():
     # PORT 지정
     PORT = 6060
 
@@ -83,15 +65,8 @@ if __name__ == '__main__':
 
         #소켓에 연결된 모든 클라이언트에게 동일한 메시지를 보내기 위한 쓰레드(브로드캐스트)
         #연결된 클라이언트가 1명 이상일 경우 변경된 group 리스트로 반영
-        if count > 1:
-            send_queue.put('Group Changed')
-            sendthread = threading.Thread(target=Send, args=(group, send_queue))
-            sendthread.start()
-            pass
-        else:
-            sendthread = threading.Thread(target=Send, args=(group, send_queue))
-            sendthread.start()
-
         #소켓에 연결된 각각의 클라이언트의 메시지를 받을 쓰레드
-        recvthread = threading.Thread(target=Recv, args=(conn, count, send_queue))
+        recvthread = threading.Thread(target=Handle, args=(conn, SERVER, count))
         recvthread.start()
+
+init()

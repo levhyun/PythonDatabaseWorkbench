@@ -1,32 +1,33 @@
 import socket
 import threading
 
-def Send(client):
+def Handle(client, name):
     while True:
         data = input("Pysql>")
+        # 사용자 입력
+        sendData = "[" + name + "]" + data
         if data != '':
-            # 사용자 입력
-            client.send(bytes(data.encode()))  
+            client.send(bytes(sendData.encode()))  
             # Client -> Server 데이터 송신 
+            recv_data = client.recv(1024).decode()  
+            # Server -> Client 데이터 수신
+            print(recv_data)
 
-def Recv(client):
-    while True:
-        recv_data = client.recv(1024).decode()  
-        # Server -> Client 데이터 수신
-        print(recv_data)
-
-if __name__ == '__main__':
+def init():
     # client 설정
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     # AF_INET -> 해당 소켓은 IPV4(IP version 4)로 사용을 의미
     # SOCK_STREAM -> 해당 소켓에 TCP 패킷을 받겠다는 의미
 
-    SERVER = input("IP:")
+    # SERVER = input("IP:")
+    SERVER = "172.31.0.1"
     # 통신할 대상의 IP 주소
-    PORT = int(input("PORT:"))
+    # PORT = int(input("PORT:"))
+    PORT = 6060
     # 통신할 대상의 Port 주소
 
-    NAME = input("NAME:")
+    # NAME = input("NAME:")
+    NAME = "자현"
 
     # Server Aress
     ADDR = (SERVER, PORT)
@@ -39,9 +40,7 @@ if __name__ == '__main__':
     print(f'Connecting to {SERVER}:{PORT}')
 
     #Client의 메시지를 보낼 쓰레드
-    sendthread = threading.Thread(target=Send, args=(client, ))
+    sendthread = threading.Thread(target=Handle, args=(client, NAME, ))
     sendthread.start()
 
-    #Server로 부터 다른 클라이언트의 메시지를 받을 쓰레드
-    recvthread = threading.Thread(target=Recv, args=(client, ))
-    recvthread.start()
+init()
