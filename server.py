@@ -2,18 +2,23 @@ import socket
 import threading
 import Controller
 
+def recvDataSet(data):
+    result = ""
+    for i in data:
+        result += i
+    return result
+
 def Handle(conn, SERVER, count):
     while True:
         message = conn.recv(1024).decode()
         print(f"RECEIVE([{SERVER}:6060][Thread:{str(count)}]{message})")
-        sendData = ""
-        start = 0
-        for c in message:
-            if start == 1:
-                sendData += c
-            if c == "]":
-                start += 1
-        resultSendData = Controller.recvDataSet(sendData)
+        data = ""
+        for i in range(0, len(message)):
+            if message[i] == ']':
+                name = message[1:i]
+                data = message[i+1:]
+                break
+        resultSendData = Controller.recvDataSet(data)
         resultSendData = f'{resultSendData}'
         conn.send(bytes(resultSendData.encode()))
         #각각의 클라이언트의 메시지, 소켓정보, 쓰레드 번호를 send로 보냄

@@ -1,11 +1,12 @@
-import function as set
+import Service
     
 def recvDataSet(data):
-    setData = set.deleteSpace(data)
-    commandList = set.InterpretCommands(setData)
-    commandNumber = set.getCommandNumber(commandList[0])
+    setData = Service.deleteSpace(data)
+    commandList = Service.InterpretCommands(setData)
+    commandNumber = Service.getCommandNumber(commandList[0])
+    command = commandList[1]
     if commandNumber == 0:
-        print('조회')
+        return Service.select(command)
     elif commandNumber == 1:
         print('생성')
     elif commandNumber == 2:
@@ -18,4 +19,3 @@ def recvDataSet(data):
         print('변경')
     else:
         print('[ERROR] not found command.')
-    return commandList
