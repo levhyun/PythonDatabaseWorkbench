@@ -1,8 +1,11 @@
-import Service
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from Server import Service
     
 def recvDataSet(data):
     setData = Service.deleteSpace(data)
     commandList = Service.InterpretCommands(setData)
+    print(commandList)
     commandNumber = Service.getCommandNumber(commandList[0])
     command = commandList[1]
     if commandNumber == 0:

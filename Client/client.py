@@ -5,7 +5,7 @@ def Handle(client, name):
     while True:
         data = input("Pysql>")
         # 사용자 입력
-        sendData = "[" + name + "]" + data
+        sendData = "[" + name + "]" + data.strip()
         if data != '':
             client.send(bytes(sendData.encode()))  
             # Client -> Server 데이터 송신 

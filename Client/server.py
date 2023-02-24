@@ -1,6 +1,8 @@
 import socket
 import threading
-import Controller
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from Server import Controller
 
 def recvDataSet(data):
     result = ""
@@ -15,7 +17,6 @@ def Handle(conn, SERVER, count):
         data = ""
         for i in range(0, len(message)):
             if message[i] == ']':
-                name = message[1:i]
                 data = message[i+1:]
                 break
         resultSendData = Controller.recvDataSet(data)

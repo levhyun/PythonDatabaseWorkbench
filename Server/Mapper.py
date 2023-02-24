@@ -2,9 +2,9 @@ import pymysql as db
 import pandas as pd
 
 connect = db.connect(host='localhost', user='root', password='2345s', db='Pysql', charset='utf8', autocommit=True, cursorclass=db.cursors.DictCursor)
-handle = connect.cursor()
 
 def selectTableList():
+    handle = connect.cursor()
     sql = 'SHOW TABLES;' 
     handle.execute(sql)
     result = handle.fetchall()
@@ -32,6 +32,7 @@ def selectSql(table, filed, filter):
         return f'SELECT {filed} FROM {table};' 
 
 def selectTable(command):
+    handle = connect.cursor()
     table, filed, filter = selectCommandSet(command)
     sql = selectSql(table, filed, filter)
     handle.execute(sql)
@@ -41,6 +42,7 @@ def selectTable(command):
     return result
 
 def selectTableType(command):
+    handle = connect.cursor()
     table = ""
     for i in command:
         if i != '[' and i != ']':
