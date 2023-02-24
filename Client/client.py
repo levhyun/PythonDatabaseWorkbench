@@ -3,9 +3,9 @@ import threading
 
 def Handle(client, name):
     while True:
-        data = input("Pysql>")
+        data = input("Pysql>").strip()
         # 사용자 입력
-        sendData = "[" + name + "]" + data.strip()
+        sendData = "[" + name + "]" + data
         if data != '':
             client.send(bytes(sendData.encode()))  
             # Client -> Server 데이터 송신 

@@ -10,6 +10,11 @@ def recvDataSet(data):
         result += i
     return result
 
+def help():
+    return """
+    comming soon
+    """
+
 def Handle(conn, SERVER, count):
     while True:
         message = conn.recv(1024).decode()
@@ -19,10 +24,13 @@ def Handle(conn, SERVER, count):
             if message[i] == ']':
                 data = message[i+1:]
                 break
-        resultSendData = Controller.recvDataSet(data)
-        resultSendData = f'{resultSendData}'
-        conn.send(bytes(resultSendData.encode()))
-        #각각의 클라이언트의 메시지, 소켓정보, 쓰레드 번호를 send로 보냄
+        if data == "help":
+            sendData = help()
+            conn.send(bytes(sendData.encode()))
+        else:
+            resultSendData = Controller.recvDataSet(data)
+            resultSendData = f'{resultSendData}'
+            conn.send(bytes(resultSendData.encode()))
 
 def init():
     # PORT 지정
@@ -67,11 +75,8 @@ def init():
 
         group.append(conn) 
         #연결된 클라이언트의 소켓정보
-        print(f"※NEW CONNECTION※\n{str(addr)} connected.")
+        print(f"※NEW CONNECTION※\n{str(addr)} connected.\n")
 
-        #소켓에 연결된 모든 클라이언트에게 동일한 메시지를 보내기 위한 쓰레드(브로드캐스트)
-        #연결된 클라이언트가 1명 이상일 경우 변경된 group 리스트로 반영
-        #소켓에 연결된 각각의 클라이언트의 메시지를 받을 쓰레드
         recvthread = threading.Thread(target=Handle, args=(conn, SERVER, count))
         recvthread.start()
 

@@ -12,28 +12,14 @@ def selectTableList():
     result = pd.DataFrame(result)
     return result
 
-def selectCommandSet(command):
-    optionList = ['','','']
-    temp = ""
-    cnt = 0
-    for i in command:
-        if i != '[' and i != ']':
-            temp += i
-        if i == ']':
-            optionList[cnt] = temp
-            cnt += 1
-            temp = ""
-    return optionList[0], optionList[1], optionList[2]
-
 def selectSql(table, filed, filter):
     if filter != '':
         return f'SELECT {filed} FROM {table} WHERE {filter};' 
     else:
         return f'SELECT {filed} FROM {table};' 
 
-def selectTable(command):
+def selectTable(table, filed, filter):
     handle = connect.cursor()
-    table, filed, filter = selectCommandSet(command)
     sql = selectSql(table, filed, filter)
     handle.execute(sql)
     result = handle.fetchall()
@@ -53,3 +39,23 @@ def selectTableType(command):
     handle.close()
     result = pd.DataFrame(result)
     return result
+
+def createSqlFormat(filed, type):
+    List = []
+    for i in range(0, len(filed)):
+        List.append(f'{filed[i]} {type[i]} NULL, ')
+    result = ""
+    for str in List:
+        result += str
+    return result
+
+def createSql(table, filed, type):
+    rows = createSqlFormat(filed, type)
+    return f'CREATE TABLE {table}(ID INT NOT NULL AUTO_INCREMENT, {rows}PRIMARY KEY(ID));'
+
+def createTable(table, filed, type):
+    handle = connect.cursor()
+    sql = createSql(table, filed, type)
+    handle.execute(sql)
+    handle.close()
+    return f'TABLE({table}) 생성 완료.'

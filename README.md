@@ -11,7 +11,6 @@ Python Database Workbench for Koreans Using Socket Communication
 |:---:|:---:|:---:|
 |SELECT|조회|데이터를 조회하는 기능|
 |CREATE|생성|테이블을 생성하는 기능|
-|USE|사용|데이터베이스를 지정하는 기능|
 |INSERT|추가|데이터를 추가하는 기능|
 |DELETE|삭제|데이터를 삭제하는 기능|
 |ALTER|변경|데이터를 변경하는 기능|
@@ -48,16 +47,6 @@ Python Database Workbench for Koreans Using Socket Communication
 ```
 ```
 테이블 생성 ex) 생성 [교실] [grade,class,number,name] [int,int,int,char]
-```
-
-<br>
-
-**[사용]**
-```
-Pysql>사용 [데이터베이스명]
-```
-```
-ex) 사용 [학교]
 ```
 
 <br>

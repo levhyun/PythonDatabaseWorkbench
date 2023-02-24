@@ -27,6 +27,17 @@ def getCommandNumber(command):
             return i
     return -1
 
+def selectCommandSet(command):
+    optionList = []
+    temp = ""
+    for i in command:
+        if i != '[' and i != ']':
+            temp += i
+        if i == ']':
+            optionList.append(temp)
+            temp = ""
+    return optionList[0], optionList[1], optionList[2]
+
 def select(command):
     if command == "-t": # 테이블 목록 조회
         return Mapper.selectTableList()
@@ -38,6 +49,24 @@ def select(command):
                 command = command[i:]
                 break
         if option == "-r": # 테이블 조회
-            return Mapper.selectTable(command)
+            table, filed, filter = selectCommandSet(command)
+            return Mapper.selectTable(table, filed, filter)
         elif option == "-a": # 테이블 타입 조회
             return Mapper.selectTableType(command)
+
+def toList(str):
+    List = []
+    temp = ""
+    for i in str:
+        if i != ',':
+            temp += i
+        else:
+            List.append(temp)
+            temp = ""
+    List.append(temp)
+    return List
+
+def create(command):
+    table, filed, type = selectCommandSet(command)
+    return Mapper.createTable(table, toList(filed), toList(type))
+
