@@ -12,10 +12,10 @@ def recvDataSet(data):
     elif commandNumber == 1:
         return Service.create(command)
     elif commandNumber == 3:
-        print('추가')
+        return Service.insert(command)
     elif commandNumber == 4:
         print('삭제')
     elif commandNumber == 5:
         print('변경')
     else:
-        return '[ERROR] not found command.'
+        return '[ERROR] 존재하지 않는 명령어.'

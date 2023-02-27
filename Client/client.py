@@ -20,7 +20,7 @@ def init():
     # SOCK_STREAM -> 해당 소켓에 TCP 패킷을 받겠다는 의미
 
     # SERVER = input("IP:")
-    SERVER = "172.31.0.1"
+    SERVER = "172.30.1.53"
     # 통신할 대상의 IP 주소
     # PORT = int(input("PORT:"))
     PORT = 6060
