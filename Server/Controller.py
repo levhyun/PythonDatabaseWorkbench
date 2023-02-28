@@ -14,8 +14,8 @@ def recvDataSet(data):
     elif commandNumber == 3:
         return Service.insert(command)
     elif commandNumber == 4:
-        print('삭제')
+        return Service.delete(command)
     elif commandNumber == 5:
-        print('변경')
+        return Service.update(command)
     else:
         return '[ERROR] 존재하지 않는 명령어.'

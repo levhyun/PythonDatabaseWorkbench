@@ -27,7 +27,7 @@ def getCommandNumber(command):
             return i
     return -1
 
-def CommandDecomposition(command):
+def CommandDecomposition3(command):
     optionList = []
     temp = ""
     for i in command:
@@ -38,18 +38,22 @@ def CommandDecomposition(command):
             temp = ""
     return optionList[0], optionList[1], optionList[2]
 
+def optionCommand(command):
+    option = ""
+    for i in range(0,len(command)):
+        if command[i] == '[':
+            option = command[:i]
+            command = command[i:]
+            break
+    return option, command
+
 def select(command):
     if command == "-t": # 테이블 목록 조회
         return Mapper.selectTableList()
     else:
-        option = ""
-        for i in range(0,len(command)):
-            if command[i] == '[':
-                option = command[:i]
-                command = command[i:]
-                break
+        option, command = optionCommand(command)
         if option == "-r": # 테이블 조회
-            table, filed, filter = CommandDecomposition(command)
+            table, filed, filter = CommandDecomposition3(command)
             return Mapper.selectTable(table, filed, filter)
         elif option == "-a": # 테이블 타입 조회
             return Mapper.selectTableType(command)
@@ -67,10 +71,39 @@ def toList(str):
     return List
 
 def create(command):
-    table, filed, type = CommandDecomposition(command)
+    table, filed, type = CommandDecomposition3(command)
     return Mapper.createTable(table, toList(filed), toList(type))
 
 
 def insert(command):
-    table, filed, value = CommandDecomposition(command)
+    table, filed, value = CommandDecomposition3(command)
     return Mapper.insertValue(table, filed, value)
+
+def CommandDecomposition1(command):
+    result = ""
+    for i in command:
+        if i != '[' and i != ']':
+            result += i
+        if i == ']':
+            break
+    return result
+
+def CommandDecomposition2(command):
+    optionList = []
+    temp = ""
+    for i in command:
+        if i != '[' and i != ']':
+            temp += i
+        if i == ']':
+            optionList.append(temp)
+            temp = ""
+    return optionList[0], optionList[1]
+
+def delete(command):
+    option, command = optionCommand(command)
+    if option == "-t": # 테이블 삭제
+        table = CommandDecomposition1(command)
+        return Mapper.deleteTable(table)
+    elif option == "-r": # 테이블 값 삭제
+        table, filter = CommandDecomposition2(command)
+        return Mapper.deleteValue(table, filter)

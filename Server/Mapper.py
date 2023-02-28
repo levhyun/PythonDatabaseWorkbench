@@ -95,9 +95,28 @@ def insertValue(table, filed, value):
     try:
         handle = connect.cursor()
         sql = insertSql(table, filed, value)
-        print(sql)
         handle.execute(sql)
         handle.close()
         return f'{value} 추가 완료.'
     except:
         return '[ERROR] 추가 실패.'
+    
+def deleteTable(table):
+    try:
+        handle = connect.cursor()
+        sql = f'DROP TABLE {table};'
+        handle.execute(sql)
+        handle.close()
+        return f'{table} 삭제 완료.'
+    except:
+        return '[ERROR] 삭제 실패.'
+    
+def deleteValue(table, filter):
+    try:
+        handle = connect.cursor()
+        sql = f'DELETE FROM {table} WHERE {filter};'
+        handle.execute(sql)
+        handle.close()
+        return f'행 삭제 완료.'
+    except:
+        return '[ERROR] 삭제 실패.'
