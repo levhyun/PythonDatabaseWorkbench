@@ -9,11 +9,11 @@ Python Database Workbench for Koreans Using Socket Communication
 ---
 |Id|Name|Skill|
 |:---:|:---:|:---:|
-|SELECT|조회|데이터를 조회하는 기능|
+|SELECT,DESC|조회|데이터를 조회하는 기능|
 |CREATE|생성|테이블을 생성하는 기능|
 |INSERT|추가|데이터를 추가하는 기능|
-|DELETE|삭제|데이터를 삭제하는 기능|
-|ALTER|변경|데이터를 변경하는 기능|
+|DELETE,DROP|삭제|데이터를 삭제하는 기능|
+|ALTER,UPDATE|수정|데이터를 변경하는 기능|
 ---
 
 
@@ -22,6 +22,9 @@ Python Database Workbench for Koreans Using Socket Communication
 
 ### **Command Type**
 ---
+
+<br>
+
 **[조회]**
 ```
 테이블 목록 조회 Pysql>조회 {옵션}
@@ -43,10 +46,10 @@ Python Database Workbench for Koreans Using Socket Communication
 
 **[생성]**
 ```
-테이블 생성 Pysql>생성 [테이블명] [속성명] [자료형]
+테이블 생성 Pysql>생성 [테이블명] [속성] [자료형]
 ```
 ```
-테이블 생성 ex) 생성 [교실] [grade,class,number,name] [int,int,int,char]
+테이블 생성 ex) 생성 [교실] [grade,class,number,name] [int(100),int(100),int(100),char(100)]
 ```
 
 <br>
@@ -77,13 +80,22 @@ ex) 추가 [학생] [grade,class,number,name,gender] [1,2,3,test,male]
 
 <br>
 
-**[변경]**
+**[수정]**
 ```
-Pysql>조회 [테이블명] [변경식] [조건]
+테이블 수정 Pysql> comming soon
+테이블 값을 수정 Pysql> 수정 {옵션} [테이블명] [변경식] [조건]
 ```
 ```
-ex) 조회 [학생] [gender=female]  [number<5]
+테이블 수정 ex) comming soon
+테이블 값을 수정 ex) 수정 -t [학생] [gender=female]  [number<5]
 ```
+|Option|Skill|
+|:---:|:---:|
+|-t|테이블을 수정하다|
+|-r|테이블 값을 삭제하다|
+
+<br>
+
 ---
 
 

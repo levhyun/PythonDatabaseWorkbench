@@ -120,3 +120,13 @@ def deleteValue(table, filter):
         return f'행 삭제 완료.'
     except:
         return '[ERROR] 삭제 실패.'
+    
+def tableValueUpdate(table, update, filter):
+    try:
+        handle = connect.cursor()
+        sql = f'UPDATE {table} SET {update} WHERE {filter};'
+        handle.execute(sql)
+        handle.close()
+        return f'({update}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'

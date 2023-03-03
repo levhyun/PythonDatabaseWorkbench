@@ -21,8 +21,8 @@ def InterpretCommands(data):
     return [command, option]
 
 def getCommandNumber(command):
-    commandNameList = ['조회','생성','사용','추가','삭제','변경']
-    for i in range(0,5):
+    commandNameList = ['조회','생성','사용','추가','삭제','수정']
+    for i in range(0,6):
         if commandNameList[i] in command:
             return i
     return -1
@@ -107,3 +107,12 @@ def delete(command):
     elif option == "-r": # 테이블 값 삭제
         table, filter = CommandDecomposition2(command)
         return Mapper.deleteValue(table, filter)
+    
+def update(command):
+    option, command = optionCommand(command)
+    if option == "-t": # 테이블 수정
+        # comming soon
+        return 'comming soon'
+    elif option == "-r": # 테이블 값 수정
+        table, update, filter = CommandDecomposition3(command)
+        return Mapper.tableValueUpdate(table, update, filter)
