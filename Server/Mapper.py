@@ -1,5 +1,6 @@
 import pymysql as db
 import pandas as pd
+from tabulate import tabulate
 
 connect = db.connect(host='localhost', user='root', password='2345s', db='Pysql', charset='utf8', autocommit=True, cursorclass=db.cursors.DictCursor)
 
@@ -11,7 +12,8 @@ def selectTableList():
         result = handle.fetchall()
         handle.close()
         result = pd.DataFrame(result)
-        return result
+        return tabulate(result, headers='keys', tablefmt='fancy_grid', showindex=True)
+        # return tabulate(result, headers='keys', tablefmt='psql', showindex=True) # mysql select window view
     except:
         return '[ERROR] 조회 실패.'
 
@@ -29,7 +31,7 @@ def selectTable(table, filed, filter):
         result = handle.fetchall()
         handle.close()
         result = pd.DataFrame(result)
-        return result
+        return tabulate(result, headers='keys', tablefmt='fancy_grid', showindex=True)
     except:
         return '[ERROR] 조회 실패.'
 
@@ -45,7 +47,7 @@ def selectTableType(command):
         result = handle.fetchall()
         handle.close()
         result = pd.DataFrame(result)
-        return result
+        return tabulate(result, headers='keys', tablefmt='fancy_grid', showindex=True)
     except:
         return '[ERROR] 조회 실패.'
 
