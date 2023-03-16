@@ -12,7 +12,7 @@ def selectTableList():
         result = handle.fetchall()
         handle.close()
         result = pd.DataFrame(result)
-        return tabulate(result, headers='keys', tablefmt='fancy_grid', showindex=True)
+        return tabulate(result, headers='keys', tablefmt='fancy_grid', showindex=True) # excel table view
         # return tabulate(result, headers='keys', tablefmt='psql', showindex=True) # mysql select window view
     except:
         return '[ERROR] 조회 실패.'
@@ -130,5 +130,55 @@ def tableValueUpdate(table, update, filter):
         handle.execute(sql)
         handle.close()
         return f'({update}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'
+    
+def tableFiledAdd(mod ,table, filed, type):
+    try:
+        handle = connect.cursor()
+        sql = f'ALTER TABLE {table} ADD COLUMN {filed} {type} NULL;'
+        handle.execute(sql)
+        handle.close()
+        return f'(mod:{mod}, table:{table}, filed:{filed}, type:{type}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'
+
+def tableFiledModify(mod ,table, filed, type):
+    try:
+        handle = connect.cursor()
+        sql = f'ALTER TABLE {table} MODIFY COLUMN {filed} {type} NULL;'
+        handle.execute(sql)
+        handle.close()
+        return f'(mod:{mod}, table:{table}, filed:{filed}, type:{type}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'
+
+def tableFiledChange(mod , table, BeforeFiled, AfterFiled, type):
+    try:
+        handle = connect.cursor()
+        sql = f'ALTER TABLE {table} CHANGE COLUMN {BeforeFiled} {AfterFiled} {type} NULL;'
+        handle.execute(sql)
+        handle.close()
+        return f'(mod:{mod}, table:{table}, filed:{AfterFiled}, type:{type}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'
+
+def tableFiledDrop(mod ,table, filed):
+    try:
+        handle = connect.cursor()
+        sql = f'ALTER TABLE {table} DROP COLUMN {filed};'
+        handle.execute(sql)
+        handle.close()
+        return f'(mod:{mod}, table:{table}, filed:{filed}) 수정 완료.'
+    except:
+        return '[ERROR] 수정 실패.'
+
+def tableFiledRename(mod ,BeforeTable, AfterTable):
+    try:
+        handle = connect.cursor()
+        sql = f'ALTER TABLE {BeforeTable} RENAME {AfterTable};'
+        handle.execute(sql)
+        handle.close()
+        return f'(mod:{mod}, table:{AfterTable}) 수정 완료.'
     except:
         return '[ERROR] 수정 실패.'

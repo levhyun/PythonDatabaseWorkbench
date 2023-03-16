@@ -108,11 +108,49 @@ def delete(command):
         table, filter = CommandDecomposition2(command)
         return Mapper.deleteValue(table, filter)
     
+def optionInterpretation(option):
+    return option[:2], option[2:]
+
+def CommandDecomposition4(command):
+    optionList = []
+    temp = ""
+    for i in command:
+        if i != '[' and i != ']':
+            temp += i
+        if i == ']':
+            optionList.append(temp)
+            temp = ""
+    return optionList[0], optionList[1], optionList[2], optionList[3]
+
+def updateFiledAddHandle(mod, table, filed, type):
+    if mod == "ADD":
+        return Mapper.tableFiledAdd(mod ,table, filed, type)
+    elif mod == "MODIFY":
+        return Mapper.tableFiledModify(mod ,table, filed, type)
+
+def updateTableHandle(mod, command):
+    if mod == "ADD" or mod == "MODIFY":
+        table, filed, type = CommandDecomposition3(command)
+        print(table, filed, type) # test
+        return updateFiledAddHandle(mod, table, filed, type)
+    elif mod == "CHANGE":
+        table, BeforeFiled, AfterFiled, type = CommandDecomposition4(command)
+        print(BeforeTable, AfterTable, type) # test
+        return Mapper.tableFiledChange(mod , table, BeforeFiled, AfterFiled, type)
+    elif mod == "DROP":
+        table, filed = CommandDecomposition2(command)
+        print(table, filed) # test
+        return Mapper.tableFiledDrop(mod ,table, filed)
+    elif mod == "RENAME":
+        BeforeTable, AfterTable = CommandDecomposition2(command)
+        print(BeforeTable, AfterTable) # test
+        return Mapper.tableFiledRename(mod ,BeforeTable, AfterTable)
+
 def update(command):
     option, command = optionCommand(command)
+    option, mod = optionInterpretation(option)
     if option == "-t": # 테이블 수정
-        # comming soon
-        return 'comming soon'
+        return updateTableHandle(mod, command)
     elif option == "-r": # 테이블 값 수정
         table, update, filter = CommandDecomposition3(command)
         return Mapper.tableValueUpdate(table, update, filter)

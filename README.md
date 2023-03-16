@@ -82,17 +82,33 @@ ex) 추가 [학생] [grade,class,number,name,gender] [1,2,3,test,male]
 
 **[수정]**
 ```
-테이블 수정 Pysql> comming soon
-테이블 값을 수정 Pysql> 수정 {옵션} [테이블명] [변경식] [조건]
+테이블 수정 - ADD Pysql> 수정 -t {모드} [테이블명] [속성] [자료형]
+테이블 수정 - MODIFY Pysql> 수정 -t {모드} [테이블명] [속성] [자료형]
+테이블 수정 - CHANGE Pysql> 수정 -t {모드} [원래속성명] [변경할속성명] [속성] [자료형]
+테이블 수정 - DROP Pysql> 수정 -t {모드} [테이블명] [속성]
+테이블 수정 - RENAME Pysql> 수정 -t {모드} [원래테이블명] [변경할테이블명]
+테이블 값을 수정 Pysql> 수정 -r [테이블명] [변경식] [조건]
 ```
 ```
-테이블 수정 ex) comming soon
-테이블 값을 수정 ex) 수정 -t [학생] [gender=female]  [number<5]
+테이블 수정 - ADD ex) 수정 -t ADD [test2] [d] [int(64)]
+테이블 수정 - MODIFY ex) comming soon
+테이블 수정 - CHANGE ex) comming soon
+테이블 수정 - DROP ex) comming soon
+테이블 수정 - RENAME ex) comming soon
+테이블 값을 수정 ex) 수정 -r [학생] [gender=female]  [number<5]
 ```
 |Option|Skill|
 |:---:|:---:|
 |-t|테이블을 수정하다|
 |-r|테이블 값을 삭제하다|
+
+|Mod|Skill|
+|:---:|:---:|
+|ADD|칼럼을 추가한다|
+|MODIFY|칼럼을 변경한다|
+|CHANGE|칼럼 이름까지 변경한다|
+|DROP|칼럼을 삭제한다|
+|RENAME|테이블 이름을 변경한다|
 
 <br>
 
