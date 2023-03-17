@@ -30,6 +30,7 @@ def Handle(conn, SERVER, count):
         else:
             resultSendData = Controller.recvDataSet(data)
             resultSendData = f'{resultSendData}'
+            print(resultSendData)
             conn.send(bytes(resultSendData.encode()))
 
 def init():

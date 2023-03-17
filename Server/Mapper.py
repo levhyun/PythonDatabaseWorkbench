@@ -42,7 +42,7 @@ def selectTableType(command):
         for i in command:
             if i != '[' and i != ']':
                 table += i
-        sql = f'DESC {table};' 
+        sql = f'DESC {table};'
         handle.execute(sql)
         result = handle.fetchall()
         handle.close()

@@ -9,7 +9,7 @@ def Handle(client, name):
         if data != '':
             client.send(bytes(sendData.encode()))  
             # Client -> Server 데이터 송신 
-            recv_data = client.recv(1024).decode()  
+            recv_data = client.recv(8192).decode()  
             # Server -> Client 데이터 수신
             print(recv_data)
 
@@ -19,15 +19,13 @@ def init():
     # AF_INET -> 해당 소켓은 IPV4(IP version 4)로 사용을 의미
     # SOCK_STREAM -> 해당 소켓에 TCP 패킷을 받겠다는 의미
 
-    # SERVER = input("IP:")
-    SERVER = "10.80.163.238"
+    SERVER = input("IP:")
     # 통신할 대상의 IP 주소
-    # PORT = int(input("PORT:"))
-    PORT = 6060
+
+    PORT = int(input("PORT:"))
     # 통신할 대상의 Port 주소
 
-    # NAME = input("NAME:")
-    NAME = "자현"
+    NAME = input("NAME:")
 
     # Server Aress
     ADDR = (SERVER, PORT)
