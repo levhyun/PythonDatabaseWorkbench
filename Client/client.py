@@ -1,6 +1,8 @@
 import socket
 import threading
 
+MAX_SIZE = 4194304
+
 def Handle(client, name):
     while True:
         data = input("Pysql>").strip()
@@ -9,7 +11,7 @@ def Handle(client, name):
         if data != '':
             client.send(bytes(sendData.encode()))  
             # Client -> Server 데이터 송신 
-            recv_data = client.recv(8192).decode()  
+            recv_data = client.recv(MAX_SIZE).decode()  
             # Server -> Client 데이터 수신
             print(recv_data)
 

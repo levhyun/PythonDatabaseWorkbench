@@ -131,19 +131,15 @@ def updateFiledAddHandle(mod, table, filed, type):
 def updateTableHandle(mod, command):
     if mod == "ADD" or mod == "MODIFY":
         table, filed, type = CommandDecomposition3(command)
-        print(table, filed, type) # test
         return updateFiledAddHandle(mod, table, filed, type)
     elif mod == "CHANGE":
         table, BeforeFiled, AfterFiled, type = CommandDecomposition4(command)
-        print(BeforeTable, AfterTable, type) # test
         return Mapper.tableFiledChange(mod , table, BeforeFiled, AfterFiled, type)
     elif mod == "DROP":
         table, filed = CommandDecomposition2(command)
-        print(table, filed) # test
         return Mapper.tableFiledDrop(mod ,table, filed)
     elif mod == "RENAME":
         BeforeTable, AfterTable = CommandDecomposition2(command)
-        print(BeforeTable, AfterTable) # test
         return Mapper.tableFiledRename(mod ,BeforeTable, AfterTable)
 
 def update(command):

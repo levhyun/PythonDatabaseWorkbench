@@ -90,11 +90,11 @@ ex) 추가 [학생] [grade,class,number,name,gender] [1,2,3,test,male]
 테이블 값을 수정 Pysql> 수정 -r [테이블명] [변경식] [조건]
 ```
 ```
-테이블 수정 - ADD ex) 수정 -t ADD [test2] [d] [int(64)]
-테이블 수정 - MODIFY ex) comming soon
-테이블 수정 - CHANGE ex) comming soon
-테이블 수정 - DROP ex) comming soon
-테이블 수정 - RENAME ex) comming soon
+테이블 수정 - ADD ex) 수정 -t ADD [학생] [전화번호] [int(64)]
+테이블 수정 - MODIFY ex) 수정 -t MODIFY [학생] [전화번호] [int(100)]
+테이블 수정 - CHANGE ex) 수정 -t CHANGE [학생들] [전화번호] [int(1000)]
+테이블 수정 - DROP ex) 수정 -t DROP [학생] [전화번호]
+테이블 수정 - RENAME ex) 수정 -t RENAME [교실] [방]
 테이블 값을 수정 ex) 수정 -r [학생] [gender=female]  [number<5]
 ```
 |Option|Skill|

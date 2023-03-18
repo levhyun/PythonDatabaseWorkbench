@@ -176,7 +176,7 @@ def tableFiledDrop(mod ,table, filed):
 def tableFiledRename(mod ,BeforeTable, AfterTable):
     try:
         handle = connect.cursor()
-        sql = f'ALTER TABLE {BeforeTable} RENAME {AfterTable};'
+        sql = f'ALTER TABLE {BeforeTable} RENAME TO {AfterTable};'
         handle.execute(sql)
         handle.close()
         return f'(mod:{mod}, table:{AfterTable}) 수정 완료.'
